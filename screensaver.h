@@ -15,5 +15,10 @@ const int CIRCLE_RADIUS = 20;
 const int MAX_CIRCLE_SPEED = 5;
 const int FRAMES_PER_SECOND = 60;
 
+struct BALL {
+    int x, y;
+    int xVel, yVel;
+};
+
 
 #endif
