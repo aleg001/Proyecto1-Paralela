@@ -1,6 +1,7 @@
 #ifndef SCREENSAVER_H
 #define SCREENSAVER_H
 
+// Inclusión de bibliotecas estándar y bibliotecas SDL
 #include <iostream>
 #include <vector>
 #include <ctime>
@@ -11,18 +12,21 @@
 
 using namespace std;
 
+// Constantes para el tamaño de pantalla, radio del círculo, velocidad máxima y FPS
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int CIRCLE_RADIUS = 20;
 const int MAX_CIRCLE_SPEED = 5;
 const int FRAMES_PER_SECOND = 60;
 
+// Estructura para representar una pelota (ball)
 struct BALL {
     int x, y;
     int xVel, yVel;
     SDL_Color color;
 };
 
+// Declaraciones de funciones
 bool initializeSDL();
 bool initializeTTF();
 TTF_Font* loadFont(const char* fontPath, int fontSize);
@@ -34,4 +38,4 @@ void render(SDL_Renderer* renderer, const vector<BALL>& circles, TTF_Font* font,
 void calculateFPS(Uint32 frameTime, int& displayedFPS);
 void cleanup(SDL_Renderer* renderer, SDL_Window* window, TTF_Font* font);
 
-#endif
+#endif // SCREENSAVER_H
