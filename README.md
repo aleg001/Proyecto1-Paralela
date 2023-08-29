@@ -27,6 +27,45 @@ El archivo de encabezado `screensaver.h` es una parte crucial de nuestro proyect
 
 Este archivo sirve como un plano fundamental que organiza nuestras funciones y estructuras, evitando la duplicación de código y proporcionando una visión general de la estructura de nuestro programa. 📝
 
+## 📁 Módulo `screensaver.cpp`
+
+El módulo `screensaver.cpp` es una parte esencial de nuestro proyecto de Pantalla de Descanso (Screensaver). Este archivo de código fuente contiene la implementación de las funciones principales que controlan el comportamiento del screensaver. A continuación, se describen las funciones y su funcionalidad:
+
+### 📋 Funciones Principales
+
+- **`initializeSDL()`**: Esta función inicializa SDL (Simple DirectMedia Layer) para la gestión de la ventana gráfica y devuelve un valor booleano que indica si la inicialización fue exitosa.
+
+- **`initializeTTF()`**: Inicializa SDL_ttf para la representación de texto y devuelve un valor booleano que indica si la inicialización fue exitosa.
+
+- **`loadFont(const char* fontPath, int fontSize)`**: Carga una fuente TrueType (TTF) desde un archivo dado y devuelve un puntero a la fuente cargada.
+
+- **`createWindow(const char* title, int width, int height)`**: Crea una ventana SDL con el título y las dimensiones especificadas.
+
+- **`createRenderer(SDL_Window* window)`**: Crea un renderizador SDL asociado a la ventana proporcionada.
+
+- **`initializeCircles(vector<BALL>& circles)`**: Inicializa las posiciones y colores de los círculos que se mostrarán en el screensaver.
+
+- **`handleEvents(bool& quit)`**: Maneja eventos de SDL, como la solicitud de cierre de la ventana, y actualiza la variable `quit` en consecuencia.
+
+- **`render(SDL_Renderer* renderer, const vector<BALL>& circles, TTF_Font* font, int displayedFPS)`**: Renderiza los círculos y el texto de FPS en la ventana gráfica utilizando el renderizador proporcionado.
+
+- **`calculateFPS(Uint32 frameTime, int& displayedFPS)`**: Calcula y actualiza los cuadros por segundo (FPS) basados en el tiempo de cuadro proporcionado.
+
+- **`cleanup(SDL_Renderer* renderer, SDL_Window* window, TTF_Font* font)`**: Limpia los recursos utilizados por SDL, incluyendo el renderizador, la ventana y la fuente TTF.
+
+### 🌐 Funcionamiento
+
+Este módulo es responsable de la configuración inicial de SDL, la gestión de eventos de usuario, la representación gráfica de círculos y texto, y el cierre ordenado del programa. La optimización y la simulación de movimiento de los círculos se logran utilizando otras funciones y estructuras definidas en el proyecto.
+
+El archivo `screensaver.cpp` trabaja en conjunto con otros módulos y el archivo de encabezado `screensaver.h` para crear una experiencia de pantalla de descanso interactiva y visualmente atractiva.
+
+### 📄 Archivo Relacionado
+
+- [**`screensaver.h`**](screensaver.h): El archivo de encabezado que contiene las declaraciones de funciones y la estructura utilizada en este módulo.
+
+Este módulo es esencial para el funcionamiento del proyecto de Pantalla de Descanso y asegura que la aplicación sea atractiva y responda a eventos de usuario de manera adecuada.
+
+
 ### 🚀 Cómo Usar
 
 1. Clona este repositorio en tu máquina local.
