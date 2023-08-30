@@ -17,6 +17,44 @@ Este proyecto se centra en la creación de un programa de pantalla de descanso (
 - 🚀 Optimización Paralela: Utilizamos OpenMP para acelerar y mejorar gradualmente el programa, lo que permite aprovechar múltiples recursos mediante la ejecución en paralelo.
 
 
+## 📁 Módulo `main.cpp`
+
+El módulo `main.cpp` es el punto de entrada principal de nuestro proyecto de Pantalla de Descanso (Screensaver). Este archivo de código fuente contiene la función `main`, que coordina la ejecución del programa. A continuación, se explica esta función y su funcionalidad:
+
+### 📋 Función Principal (`main`)
+
+- **`main(int argc, char* argv[])`**: La función `main` es la función principal del programa. Toma argumentos de línea de comandos y coordina la ejecución del screensaver.
+
+### 🚀 Cómo Usar
+
+Para ejecutar el programa, sigue estos pasos:
+
+1. Abre una terminal.
+2. Navega al directorio donde se encuentra el proyecto.
+3. Compila el código fuente, por ejemplo, usando el comando `g++ main.cpp screensaver.cpp -o screensaver -lSDL2 -lSDL2_ttf -fopenmp`.
+4. Ejecuta el programa con el número deseado de círculos como argumento, por ejemplo, `./screensaver 50`.
+
+### 🧾 Argumentos de Línea de Comandos
+
+- **`<Number of circles>`**: Debes proporcionar un número entero positivo como argumento para determinar la cantidad de círculos que se mostrarán en la pantalla. Por ejemplo, `./screensaver 50` mostrará 50 círculos.
+
+### 🌐 Funcionamiento
+
+La función `main` se encarga de:
+
+1. Verificar si se proporciona el número de círculos como argumento y si es válido.
+2. Inicializar SDL y SDL_ttf para la creación de ventanas y la representación de texto.
+3. Cargar una fuente TTF (TrueType Font) para el texto.
+4. Crear una ventana y un renderizador SDL para la representación gráfica.
+5. Inicializar la generación de números aleatorios.
+6. Crear un vector de círculos y establecer sus posiciones y colores iniciales.
+7. Iniciar un bucle principal que maneja eventos de usuario, renderiza los círculos y muestra los FPS.
+8. Calcular y actualizar los cuadros por segundo (FPS).
+9. Limpia y libera recursos al finalizar.
+
+
+
+
 ## 📄 Archivo de Encabezado (screensaver.h)
 
 El archivo de encabezado `screensaver.h` es una parte crucial de nuestro proyecto de screensaver. A continuación, te proporcionamos una descripción de su contenido:
