@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[]) {
     // Verifica si se proporciona el número de círculos como argumento
-    if (argc < 2) {
+    if (argc != 2) {
         cout << "Usage: " << argv[0] << " <Number of circles>" << endl;
         return 1; // Retorna 1 para indicar un error
     }
