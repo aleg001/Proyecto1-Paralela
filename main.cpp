@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Carga una fuente TTF
-    TTF_Font* font = loadFont("slkscr.ttf", 14);
+    TTF_Font* font = loadFont("Poppins.ttf", 14);
     if (font == nullptr) {
         cout << "Failed to load font." << endl;
         return 1; // Retorna 1 para indicar un error
