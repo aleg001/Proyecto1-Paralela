@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
     srand(time(0));
 
     // Crea un vector de círculos y los inicializa
-    vector<Circle> circles(numCircles);
+    vector<BALL> circles(numCircles);
     initializeCircles(circles);
 
     Uint32 frameStart, frameTime;
