@@ -106,7 +106,7 @@ Este módulo es esencial para el funcionamiento del proyecto de Pantalla de Desc
 
 ### 🚀 Cómo Usar
 
-1. Clona este repositorio en tu máquina local.
+1. Clona este repositorio en tu máquina local. [Enlace](https://github.com/aleg001/Proyecto1-Paralela)
 2. Compila el código fuente en tu entorno de desarrollo preferido.
 3. Ejecuta el programa con el número deseado de círculos como parámetro (por ejemplo, `./screensaver 50`).
 
@@ -115,8 +115,7 @@ Este módulo es esencial para el funcionamiento del proyecto de Pantalla de Desc
 Asegúrate de tener instaladas las siguientes dependencias antes de compilar y ejecutar el proyecto:
 
 - SDL2 (Simple DirectMedia Layer)
-- SDL2_ttf (para la representación de texto)
-- OpenMP (opcional, para la optimización paralela)
+- OpenMP (para la optimización paralela)
 
 ### 📖 Bibliografía
 
