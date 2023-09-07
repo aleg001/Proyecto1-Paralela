@@ -1,12 +1,12 @@
 #include "screensaver.h"
 #include "omp.h"
 
+// Global variables for the window and renderer
 SDL_Window* gWindow = nullptr;
 SDL_Renderer* gRenderer = nullptr;
 
-
 // Function to generate a random color
-SDL_Color getRandomColor() {
+SDL_Color GenerateRandomColor() {
     SDL_Color color;
     color.r = rand() % 256;
     color.g = rand() % 256;
@@ -14,57 +14,62 @@ SDL_Color getRandomColor() {
     return color;
 }
 
-// Function to render a filled circle in SDL renderer
-void renderFilledCircle(SDL_Renderer* renderer, int x, int y, int radius) {
+// Function to render a filled circle in the SDL renderer
+void RenderFilledCircle(SDL_Renderer* renderer, int x, int y, int radius) {
     SDL_Rect rect;
     rect.x = x - radius;
     rect.y = y - radius;
     rect.w = radius * 2;
     rect.h = radius * 2;
-    //#pragma omp parallel for
+
     for (int dy = -radius; dy <= radius; dy++) {
-        int lineW = static_cast<int>(sqrt(radius * radius - dy * dy) * 2 + 0.5);
+        int lineWidth = static_cast<int>(sqrt(radius * radius - dy * dy) * 2 + 0.5);
         int lineY = y + dy;
         SDL_Rect lineRect;
-        lineRect.x = x - lineW / 2;
+        lineRect.x = x - lineWidth / 2;
         lineRect.y = lineY;
-        lineRect.w = lineW;
+        lineRect.w = lineWidth;
         lineRect.h = 1;
         SDL_RenderFillRect(renderer, &lineRect);
     }
 }
 
-
-bool initializeSDL() {
+// Function to initialize SDL
+bool InitializeSDL() {
     return SDL_Init(SDL_INIT_VIDEO) == 0;
 }
 
-bool initializeTTF() {
+// Function to initialize SDL_ttf
+bool InitializeTTF() {
     return TTF_Init() == 0;
 }
 
-TTF_Font* loadFont(const char* fontPath, int fontSize) {
+// Function to load a TTF font
+TTF_Font* LoadFont(const char* fontPath, int fontSize) {
     return TTF_OpenFont(fontPath, fontSize);
 }
 
-SDL_Window* createWindow(const char* title, int width, int height) {
+// Function to create an SDL window
+SDL_Window* CreateWindow(const char* title, int width, int height) {
     return SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
 }
 
-SDL_Renderer* createRenderer(SDL_Window* window) {
+// Function to create an SDL renderer
+SDL_Renderer* CreateRenderer(SDL_Window* window) {
     return SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 }
 
-void initializeCircles(vector<Circle>& circles) {
-    //#pragma omp parallel for
+// Function to initialize the positions and initial colors of the circles
+void InitializeCircles(vector<BALL>& circles) {
     for (int i = 0; i < circles.size(); ++i) {
         circles[i].x = rand() % (SCREEN_WIDTH - 2 * CIRCLE_RADIUS) + CIRCLE_RADIUS;
         circles[i].y = rand() % (SCREEN_HEIGHT - 2 * CIRCLE_RADIUS) + CIRCLE_RADIUS;
-        circles[i].color = getRandomColor();
+        circles[i].color = GenerateRandomColor();
     }
 }
 
-void handleEvents(bool& quit) {
+// Function to handle SDL events
+void HandleEvents(bool& quit) {
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_QUIT) {
@@ -73,15 +78,19 @@ void handleEvents(bool& quit) {
     }
 }
 
-void render(SDL_Renderer* renderer, const vector<Circle>& circles, TTF_Font* font, int displayedFPS) {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+// Function to render the scene
+void Render(SDL_Renderer* renderer, const vector<BALL>& circles, TTF_Font* font, int displayedFPS) {
+    // Clear the renderer with a background color
+    SDL_SetRenderDrawColor(renderer, 0, 102, 255, 255);
     SDL_RenderClear(renderer);
-    //#pragma omp parallel for
+
+    // Render the circles
     for (int i = 0; i < circles.size(); ++i) {
         SDL_SetRenderDrawColor(renderer, circles[i].color.r, circles[i].color.g, circles[i].color.b, 255);
-        renderFilledCircle(renderer, circles[i].x, circles[i].y, CIRCLE_RADIUS);
+        RenderFilledCircle(renderer, circles[i].x, circles[i].y, CIRCLE_RADIUS);
     }
 
+    // Render the FPS text
     string fpsText = "FPS: " + to_string(displayedFPS);
     SDL_Color textColor = {255, 255, 255};
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, fpsText.c_str(), textColor);
@@ -97,16 +106,19 @@ void render(SDL_Renderer* renderer, const vector<Circle>& circles, TTF_Font* fon
     SDL_DestroyTexture(textTexture);
     SDL_FreeSurface(textSurface);
 
+    // Present the renderer
     SDL_RenderPresent(renderer);
 }
 
-void calculateFPS(Uint32 frameTime, int& displayedFPS) {
+// Function to calculate the FPS
+void CalculateFPS(Uint32 frameTime, int& displayedFPS) {
     if (frameTime > 0) {
         displayedFPS = 1000 / frameTime;
     }
 }
 
-void cleanup(SDL_Renderer* renderer, SDL_Window* window, TTF_Font* font) {
+// Function to clean up SDL and SDL_ttf resources
+void Cleanup(SDL_Renderer* renderer, SDL_Window* window, TTF_Font* font) {
     if (renderer != nullptr) {
         SDL_DestroyRenderer(renderer);
     }
@@ -123,14 +135,12 @@ void cleanup(SDL_Renderer* renderer, SDL_Window* window, TTF_Font* font) {
     SDL_Quit();
 }
 
-
-void moveCircles(vector<Circle>& circles) {
-    #pragma omp parallel for
+// Function to move circles randomly
+void MoveCircles(vector<BALL>& circles) {
     for (int i = 0; i < circles.size(); ++i) {
         // Update the positions of circles here (e.g., add some velocity to x and y)
-        // For example:
-        circles[i].x += ((rand() % 3)-1) * (SCREEN_WIDTH / 50); // Random horizontal movement (-1, 0, 1)
-        circles[i].y += ((rand() % 3)-1) * (SCREEN_HEIGHT / 50); // Random vertical movement (-1, 0, 1)
+        circles[i].x += ((rand() % 3) - 1) * (SCREEN_WIDTH / 50); // Random horizontal movement (-1, 0, 1)
+        circles[i].y += ((rand() % 3) - 1) * (SCREEN_HEIGHT / 50); // Random vertical movement (-1, 0, 1)
 
         // Ensure circles stay within the screen boundaries
         circles[i].x = std::max(CIRCLE_RADIUS, std::min(circles[i].x, SCREEN_WIDTH - CIRCLE_RADIUS));
