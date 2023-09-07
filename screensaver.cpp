@@ -34,6 +34,49 @@ SDL_Renderer* createRenderer(SDL_Window* window) {
     return SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 }
 
+// Función para actualizar el movimiento de los círculos basado en la física
+void updatePhysics(vector<BALL>& circles) {
+    for (int i = 0; i < circles.size(); ++i) {
+        // Actualizar la posición basada en la velocidad actual
+        circles[i].x += circles[i].xVel;
+        circles[i].y += circles[i].yVel;
+
+        // Verificar colisiones con los bordes y cambiar la velocidad
+        if (circles[i].x - CIRCLE_RADIUS < 0 || circles[i].x + CIRCLE_RADIUS > SCREEN_WIDTH) {
+            circles[i].xVel = -circles[i].xVel; // Cambiar dirección en X
+        }
+
+        if (circles[i].y - CIRCLE_RADIUS < 0 || circles[i].y + CIRCLE_RADIUS > SCREEN_HEIGHT) {
+            circles[i].yVel = -circles[i].yVel; // Cambiar dirección en Y
+        }
+    }
+
+    // Verificar colisiones entre círculos y ajustar velocidades
+    for (int i = 0; i < circles.size(); ++i) {
+        for (int j = i + 1; j < circles.size(); ++j) {
+            int dx = circles[j].x - circles[i].x;
+            int dy = circles[j].y - circles[i].y;
+            int distanceSquared = dx * dx + dy * dy;
+
+            // Si hay colisión entre dos círculos, ajustar sus velocidades
+            if (distanceSquared <= (2 * CIRCLE_RADIUS) * (2 * CIRCLE_RADIUS)) {
+                // Implementar cálculos de colisión y ajuste de velocidad aquí
+                // Puedes utilizar principios de física, como la conservación de momento
+            }
+        }
+    }
+}
+
+// Función para obtener un color aleatorio
+SDL_Color getRandomColor() {
+    SDL_Color color;
+    color.r = rand() % 256;
+    color.g = rand() % 256;
+    color.b = rand() % 256;
+    return color;
+}
+
+
 // Function to initialize the positions and colors of circles
 void initializeCircles(vector<BALL>& circles) {
     for (int i = 0; i < circles.size(); ++i) {
